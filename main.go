@@ -1,8 +1,10 @@
 package main
 
 import (
+	"example/projectIseng1/config"
 	"example/projectIseng1/router"
 	"example/projectIseng1/service"
+	"log"
 )
 
 // Model
@@ -56,8 +58,16 @@ import (
 // }
 
 func main() {
+	db, err := config.ConnectDB()
+
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	songService := service.NewSongService(db)
 	albumService := service.NewAlbumService()
 	artistService := service.NewArtistService()
-	r := router.SetUpRouter(albumService, artistService)
+	r := router.SetUpRouter(albumService, artistService, songService)
 	r.Run(":8080")
 }

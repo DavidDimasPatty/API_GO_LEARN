@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetUpRouter(albumService *service.AlbumService, artistService *service.ArtistService) *gin.Engine {
+func SetUpRouter(albumService *service.AlbumService, artistService *service.ArtistService, songService *service.SongService) *gin.Engine {
 	r := gin.Default()
 	//albums
 	r.GET("/albums", albumService.GetAlbum)
@@ -17,6 +17,9 @@ func SetUpRouter(albumService *service.AlbumService, artistService *service.Arti
 	r.GET("/artist", artistService.GetArtist)
 	r.POST("/artist", artistService.AddArtist)
 	r.GET("/artist/id", artistService.GetArtistByID)
+
+	//song
+	r.GET("/songs", songService.GetAllSongs)
 
 	return r
 }
